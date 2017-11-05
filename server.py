@@ -16,6 +16,10 @@ else:
 
 @app.route('/', methods=['GET'])
 def index():
+    if 'DYNO' in os.environ:
+        print "Heroku Detected"
+    else:
+        print "bad"
     return 'Hello World'
 
 @app.route('/events', methods=['POST'])
