@@ -1,8 +1,15 @@
+import logging
+import os
+import sys
 import traceback
 from flask import Flask, request
 
 # pylint: disable=C0103
 app = Flask(__name__)
+
+# Heroku
+if 'DYNO' in os.environ:
+    app.logger.addHandler(logging.StreamHandler(sys.stdout))
 
 @app.route('/', methods=['GET'])
 def index():
