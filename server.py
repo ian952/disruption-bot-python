@@ -50,6 +50,7 @@ def after_request(response):
             request.full_path,
             request.headers,
             request.data)
+        sys.stdout.flush()
     return response
 
 @app.errorhandler(Exception)
