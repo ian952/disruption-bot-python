@@ -9,17 +9,14 @@ app = Flask(__name__)
 
 # Heroku
 if 'DYNO' in os.environ:
-    print "Heroku Detected"
+    print "Heroku Mode"
     app.logger.addHandler(logging.StreamHandler(sys.stdout))
+    app.logger.setLevel(logging.INFO)
 else:
     print "Dev Mode"
 
 @app.route('/', methods=['GET'])
 def index():
-    if 'DYNO' in os.environ:
-        print "Heroku Detected"
-    else:
-        print "bad"
     return 'Hello World'
 
 @app.route('/events', methods=['POST'])
@@ -50,7 +47,6 @@ def after_request(response):
             request.full_path,
             request.headers,
             request.data)
-        sys.stdout.flush()
     return response
 
 @app.errorhandler(Exception)
