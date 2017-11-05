@@ -1,5 +1,6 @@
 from flask import Flask, request
 
+# pylint: disable=C0103
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
