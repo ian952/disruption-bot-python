@@ -11,6 +11,8 @@ app = Flask(__name__)
 if 'DYNO' in os.environ:
     print "Heroku Detected"
     app.logger.addHandler(logging.StreamHandler(sys.stdout))
+else:
+    print "Dev Mode"
 
 @app.route('/', methods=['GET'])
 def index():
