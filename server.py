@@ -11,8 +11,8 @@ def events():
     '''
     Events like messages
     '''
-    resp = request.form['challenge']
-    return resp
+    resp = request.json
+    return resp['challenge']
 
 @app.route('/interactive', methods=['POST'])
 def interactive():
