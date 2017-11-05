@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 # Heroku
 if 'DYNO' in os.environ:
+    print "Heroku Detected"
     app.logger.addHandler(logging.StreamHandler(sys.stdout))
 
 @app.route('/', methods=['GET'])
