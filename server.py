@@ -3,9 +3,14 @@ import os
 import sys
 import traceback
 from flask import Flask, request
+from handlers.events import EventsHandler
+from slackclient import SlackClient
 
 # pylint: disable=C0103
 app = Flask(__name__)
+events_handler = EventsHandler()
+if not app.testing and "SLACK_API_TOKEN" in os.environ:
+    events_handler = EventsHandler(SlackClient(os.environ["SLACK_API_TOKEN"]))
 
 # Heroku
 if 'DYNO' in os.environ:
@@ -24,15 +29,15 @@ def events():
     '''
     Events like messages
     '''
-    resp = request.json
-    return resp['challenge']
+    resp = events_handler.handle_events(request.json)
+    return resp
 
 @app.route('/interactive', methods=['POST'])
 def interactive():
     '''
     Any interactions with message buttons, menus, or dialogs
     '''
-    pass
+    return ''
 
 @app.after_request
 def after_request(response):
