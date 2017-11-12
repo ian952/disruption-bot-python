@@ -20,6 +20,14 @@ if 'DYNO' in os.environ:
 else:
     print "Dev Mode"
 
+# Heroku
+if 'DYNO' in os.environ:
+    print "Heroku Mode"
+    app.logger.addHandler(logging.StreamHandler(sys.stdout))
+    app.logger.setLevel(logging.INFO)
+else:
+    print "Dev Mode"
+
 @app.route('/', methods=['GET'])
 def index():
     return 'Hello World'
