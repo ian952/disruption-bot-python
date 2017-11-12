@@ -10,7 +10,7 @@ from slackclient import SlackClient
 app = Flask(__name__)
 events_handler = EventsHandler()
 if not app.testing and "SLACK_API_TOKEN" in os.environ:
-    events_handler = EventsHandler(SlackClient(os.environ["SLACK_API_TOKEN"]))
+    events_handler.set_slack_client(SlackClient(os.environ["SLACK_API_TOKEN"]))
 
 # Heroku
 if 'DYNO' in os.environ:
