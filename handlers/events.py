@@ -54,10 +54,17 @@ class EventsHandler(object):
         if request['type'] == 'event_callback':
             if request['event']['type'] == 'message':
                 event = request['event']
-                self.history.add_message(event['channel'], event['user'], event['text'])
-                if self.history.has_feridun(event['channel']):
-                    print 'feridun'
-                    self.send_feridun_message(event['channel'])
+                channel = event['channel']
+                user = None
+                if 'user' in event:
+                    user = event['user']
+                elif 'bot_id' in event:
+                    user = event['bot_id']
+                text = event['text']
+
+                self.history.add_message(channel, user, text)
+                if self.history.has_feridun(channel):
+                    self.send_feridun_message(channel)
         return ''
 
     def send_feridun_message(self, channel):

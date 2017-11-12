@@ -85,5 +85,30 @@ class ServerTest(unittest.TestCase):
             text='DISRUPTIVE!!!'
         )
 
+    def test_bot_message(self):
+        resp = self.server.post(
+            '/events',
+            headers={'content-type': 'application/json'},
+            data=ujson.dumps({
+                "token": "z26uFbvR1xHJEdHE1OQiO6t8",
+                "team_id": "T061EG9RZ",
+                "api_app_id": "A0FFV41KK",
+                "event": {
+                    "type": "message",
+                    "bot_id": "U7USK5RCL",
+                    "text": 'DISRUPTIVE!!!',
+                    "ts": "1510460963.000071",
+                    "channel": "D7V8VFEUD",
+                    "event_ts": "1510460963.000071"
+                },
+                "event_ts": "1465244570.336841",
+                "type": "event_callback",
+                "authed_users": [
+                    "U061F7AUR"
+                ]
+            })
+        )
+        assert resp.status_code == 200
+
 if __name__ == '__main__':
     unittest.main()
