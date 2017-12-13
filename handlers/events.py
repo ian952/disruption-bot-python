@@ -4,6 +4,14 @@ from collections import deque, defaultdict
 class History(object):
     MSG_LIMIT = 10
     FERIDUN = 'FERIDUN'
+    TERRIBLECODE = ':terriblecode-0-0::terriblecode-1-0::terriblecode-2-0:\n'
+                   ':terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:\n'
+                   ':terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'
+
+    LAST_MSG_RESP = {
+        'terriblecode': TERRIBLECODE,
+        'outage': TERRIBLECODE,
+    }
 
     def __init__(self):
         self.history = defaultdict(deque)
@@ -27,6 +35,14 @@ class History(object):
             if combined_msg == self.FERIDUN:
                 return True
         return False
+
+    def get_resp_to_last_msg(self, channel):
+        if len(self.history[channel]) > 0:
+            last_msg = self.history[channel][-1].lower()
+            for k in self.LAST_MSG_RESP:
+                if last_msg == k:
+                    return self.LAST_MSG_RESP[k]
+        return None
 
     def reset(self):
         self.history = defaultdict(deque)
@@ -65,18 +81,24 @@ class EventsHandler(object):
                 self.history.add_message(channel, user, text)
                 if self.history.has_feridun(channel):
                     self.send_feridun_message(channel)
+                resp = self.history.get_resp_to_last_msg(channel)
+                if resp is not None:
+                    self.send_message(channel, resp)
         return ''
 
-    def send_feridun_message(self, channel):
+    def send_message(self, channel, msg):
         if self.slack_client:
             from server import app
             resp = self.slack_client.api_call(
                 'chat.postMessage',
                 channel=channel,
-                text='DISRUPTIVE!!!'
+                text=msg
             )
             if resp['ok'] != True:
                 app.logger.error('Message send failed: %s', resp)
         else:
             print "Debug Slack API Call: %s, channel=%s, text=\"%s\"" % \
-                    ('chat.postMessage', channel, 'DISRUPTIVE!!!')
+                    ('chat.postMessage', channel, msg)
+
+    def send_feridun_message(self, channel):
+        self.send_message(channel, 'DISRUPTIVE!!!')
