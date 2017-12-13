@@ -38,7 +38,7 @@ class History(object):
 
     def get_resp_to_last_msg(self, channel):
         if len(self.history[channel]) > 0:
-            last_msg = self.history[channel][-1].lower()
+            last_msg = self.history[channel][-1]['text'].lower()
             for k in self.LAST_MSG_RESP:
                 if last_msg == k:
                     return self.LAST_MSG_RESP[k]
