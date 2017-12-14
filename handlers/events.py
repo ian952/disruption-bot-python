@@ -40,7 +40,7 @@ class History(object):
         if len(self.history[channel]) > 0:
             last_msg = self.history[channel][-1]['text'].lower()
             for k in self.LAST_MSG_RESP:
-                if k in last_msg:
+                if k == last_msg:
                     return self.LAST_MSG_RESP[k]
         return None
 
