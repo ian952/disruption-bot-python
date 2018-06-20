@@ -4,19 +4,13 @@ from collections import deque, defaultdict
 class History(object):
     MSG_LIMIT = 10
     FERIDUN = 'FERIDUN'
-    TERRIBLECODE = ''':terriblecode-0-0::terriblecode-1-0::terriblecode-2-0:
-':terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:
-':terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'''
-    DAVIDCODE = ''':davidcode-0-0::davidcode-1-0::davidcode-2-0::davidcode-3-0:
-:davidcode-0-1::davidcode-1-1::davidcode-2-1::davidcode-3-1:
-:davidcode-0-2::davidcode-1-2::davidcode-2-2::davidcode-3-2:
-:davidcode-0-3::davidcode-1-3::davidcode-2-3::davidcode-3-3:'''
+    TERRIBLECODE = ':terriblecode-0-0::terriblecode-1-0::terriblecode-2-0:\n' +\
+':terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:\n' +\
+':terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'
 
     LAST_MSG_RESP = {
         'terriblecode': TERRIBLECODE,
         'outage': TERRIBLECODE,
-        'davidcode': DAVIDCODE,
-        'bigoutage': DAVIDCODE,
     }
 
     def __init__(self):
@@ -45,8 +39,9 @@ class History(object):
     def get_resp_to_last_msg(self, channel):
         if len(self.history[channel]) > 0:
             last_msg = self.history[channel][-1]['text'].lower().strip()
-            if k in self.LAST_MSG_RESP:
-                return self.LAST_MSG_RESP[k]
+            for k in self.LAST_MSG_RESP:
+                if k == last_msg:
+                    return self.LAST_MSG_RESP[k]
         return None
 
     def reset(self):
