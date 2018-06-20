@@ -4,9 +4,9 @@ from collections import deque, defaultdict
 class History(object):
     MSG_LIMIT = 10
     FERIDUN = 'FERIDUN'
-    TERRIBLECODE = ':terriblecode-0-0::terriblecode-1-0::terriblecode-2-0:\n' +\
-':terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:\n' +\
-':terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'
+    TERRIBLECODE = ''':terriblecode-0-0::terriblecode-1-0::terriblecode-2-0:
+':terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:
+':terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'''
 
     LAST_MSG_RESP = {
         'terriblecode': TERRIBLECODE,
@@ -39,9 +39,8 @@ class History(object):
     def get_resp_to_last_msg(self, channel):
         if len(self.history[channel]) > 0:
             last_msg = self.history[channel][-1]['text'].lower().strip()
-            for k in self.LAST_MSG_RESP:
-                if k == last_msg:
-                    return self.LAST_MSG_RESP[k]
+            if k in self.LAST_MSG_RESP:
+                return self.LAST_MSG_RESP[k]
         return None
 
     def reset(self):
