@@ -1,4 +1,3 @@
-import os
 from collections import deque, defaultdict
 
 class History(object):
@@ -46,7 +45,7 @@ class History(object):
         if len(self.history[channel]) > 0:
             last_msg = self.history[channel][-1]['text'].lower().strip()
             if last_msg in self.LAST_MSG_RESP:
-                return self.LAST_MSG_RESP[k]
+                return self.LAST_MSG_RESP[last_msg]
         return None
 
     def reset(self):

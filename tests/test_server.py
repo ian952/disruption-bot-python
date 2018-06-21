@@ -1,6 +1,7 @@
 import unittest
 from collections import deque
 from server import app, events_handler
+from handlers.events import History
 from mock import Mock
 import ujson
 
@@ -83,6 +84,15 @@ class ServerTest(unittest.TestCase):
             'chat.postMessage',
             channel="D7V8VFEUD",
             text='DISRUPTIVE!!!'
+        )
+
+    def test_single_message_is_special(self):
+        self.post_msg_event('outage')
+
+        self.mock_slack_api.api_call.assert_called_once_with(
+            'chat.postMessage',
+            channel="D7V8VFEUD",
+            text=History.TERRIBLECODE
         )
 
     def test_bot_message(self):
