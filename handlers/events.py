@@ -4,8 +4,8 @@ class History(object):
     MSG_LIMIT = 10
     FERIDUN = 'FERIDUN'
     TERRIBLECODE = ''':terriblecode-0-0::terriblecode-1-0::terriblecode-2-0:
-':terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:
-':terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'''
+:terriblecode-0-1::terriblecode-1-1::terriblecode-2-1:
+:terriblecode-0-2::terriblecode-1-2::terriblecode-2-2:'''
     DAVIDCODE = ''':davidcode-0-0::davidcode-1-0::davidcode-2-0::davidcode-3-0:
 :davidcode-0-1::davidcode-1-1::davidcode-2-1::davidcode-3-1:
 :davidcode-0-2::davidcode-1-2::davidcode-2-2::davidcode-3-2:
